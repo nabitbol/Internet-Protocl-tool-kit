@@ -14,7 +14,7 @@
 #define ECHO_SEQ_MASK 0x000000000000FFFFULL
 
 uint64_t encode_datagram(struct icmphdr icmphdr);
-struct icmphdr *decode_datagram(uint64_t datagram);
+void decode_datagram(uint64_t datagram, struct icmphdr *res);
 uint16_t calculate_checksum(void *addr, int len);
 void print_icmp(uint8_t icmp_type);
 void print_bits(uint64_t value);
