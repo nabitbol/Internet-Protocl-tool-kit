@@ -22,7 +22,7 @@ typedef struct s_ping
 	char dest_ip[INET_ADDRSTRLEN];
 	struct sockaddr_in dest_addr;
 	int sock;
-	
+
 	double min_rtt;
 	double max_rtt;
 	double sum_rtt;
