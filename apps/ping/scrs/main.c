@@ -28,6 +28,12 @@ int main(int argc, char **argv)
 	if ((ping.sock = create_raw_socket(IPPROTO_ICMP)) < 0)
 		exit(EXIT_FAILURE);
 
+	if (ping.ttl == 0)
+		ping.ttl = 64;
+	
+	if (set_socket_ttl(ping.sock, ping.ttl) != 0)
+		exit(EXIT_FAILURE);
+
 	printf("PING %s (%s): 56 data bytes\n", ping.dest_name, ping.dest_ip);
 
 	start_ping_loop(&ping);

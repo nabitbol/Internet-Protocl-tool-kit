@@ -13,6 +13,7 @@
 typedef struct s_ping
 {
 	int verbose;
+	int ttl;
 	int seq;
 	int id;
 	int packets_sent;
@@ -22,7 +23,6 @@ typedef struct s_ping
 	struct sockaddr_in dest_addr;
 	int sock;
 	
-	// Stats RTT
 	double min_rtt;
 	double max_rtt;
 	double sum_rtt;

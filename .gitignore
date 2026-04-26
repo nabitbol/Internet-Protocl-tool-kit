@@ -56,3 +56,6 @@ dkms.conf
 
 # executable
 ft_ping
+
+# test
+inetutils-2.0/
