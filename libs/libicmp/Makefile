@@ -5,7 +5,8 @@ DIR_INCLUDES = inc
 DIR_OBJ = bin/obj
 
 SRC = $(DIR_SRC)/logs_utils.c \
-      $(DIR_SRC)/transcode_utils.c
+      $(DIR_SRC)/transcode_utils.c \
+      $(DIR_SRC)/checksum.c
 
 OBJ = $(SRC:$(DIR_SRC)/%.c=$(DIR_OBJ)/%.o)
 
@@ -14,9 +15,14 @@ AR = ar rcs
 
 CFLAGS = -I$(DIR_INCLUDES)
 
-.PHONY: all clean re
+.PHONY: all clean re test
 
 all: $(LIBICMP)
+
+test: $(LIBICMP)
+	$(CC) $(CFLAGS) tests/test_checksum.c $(LIBICMP) -o checksum_test
+	./checksum_test
+	@rm -f checksum_test
 
 # ---------------- LIBRARY ----------------
 

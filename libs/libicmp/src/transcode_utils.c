@@ -18,8 +18,8 @@ uint64_t encode_datagram(struct icmphdr datagram)
 	encoded_datagram |= (uint64_t)datagram.type << 56;
 	encoded_datagram |= (uint64_t)datagram.code << 48;
 	encoded_datagram |= (uint64_t)datagram.checksum << 32;
-	encoded_datagram |= (uint64_t)datagram.un.echo.id << encoded_datagram << 16;
-	encoded_datagram |= (uint64_t)datagram.un.echo.sequence << encoded_datagram;
+	encoded_datagram |= (uint64_t)datagram.un.echo.id << 16;
+	encoded_datagram |= (uint64_t)datagram.un.echo.sequence;
 	return encoded_datagram;
 }
 
@@ -27,7 +27,7 @@ struct icmphdr *decode_datagram(uint64_t datagram)
 {
 	struct icmphdr *decoded_datagram = malloc(sizeof(struct icmphdr));
 
-	if (!decode_datagram)
+	if (!decoded_datagram)
 		return NULL;
 
 	decoded_datagram->type = (datagram & ICMP_TYPE_MASK) >> 56;
