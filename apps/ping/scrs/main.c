@@ -12,7 +12,7 @@ int main(int argc, char **argv)
 
 	if (parse_args(argc, argv, &ping) != 0)
 	{
-		print_usage(argv[0]);
+		print_help(argv[0]);
 		exit(EXIT_FAILURE);
 	}
 

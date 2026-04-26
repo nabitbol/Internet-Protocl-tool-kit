@@ -9,12 +9,12 @@
   - [x] Implement DNS resolution
   - [x] Implement eudian network translation from CPU to Network (check hton)
   - [x] Implement IP header edition using sockops for the time to live
-- [ ] Add the ability to send packat mimiking ping function
+- [x] Add the ability to send packat mimiking ping function
   - [x] Parse Args
-  - [ ] Implement verbose display
-  - [ ] Options display (-help commmand)
+  - [x] Implement verbose display
+  - [x] Options display (-help commmand)
   - [x] Function to populate the packet with the good value
   - [x] Implement sending loop with send and receive of packet
-  - [ ] Implement the Roud Trip time calculation
+  - [x] Implement the Roud Trip time calculation
   - [x] Implement killing signals
-  - [ ] Implement finale statistique display
+  - [x] Implement finale statistique display

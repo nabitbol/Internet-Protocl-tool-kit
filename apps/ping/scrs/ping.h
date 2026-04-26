@@ -27,9 +27,10 @@ typedef struct s_ping
 	double max_rtt;
 	double sum_rtt;
 	double sum_sq_rtt;
+	struct timeval start_time;
 } t_ping;
 
-void print_usage(char *name);
+void print_help(char *name);
 int parse_args(int argc, char **argv, t_ping *ping);
 void build_icmp_packet(void *buf, int seq, int id);
 void start_ping_loop(t_ping *ping);

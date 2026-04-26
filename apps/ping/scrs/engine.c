@@ -7,6 +7,7 @@
 #include <netinet/ip.h>
 #include "ping.h"
 #include "icmp.h"
+#include "net.h"
 
 static volatile sig_atomic_t keep_running = 1;
 
@@ -26,17 +27,26 @@ static double ft_sqrt(double n)
 
 static void print_stats(t_ping *p)
 {
-	double avg, mdev, var;
+	double avg, stddev, var;
+	struct timeval end;
+	long total_time;
+
+	gettimeofday(&end, NULL);
+	total_time = (end.tv_sec - p->start_time.tv_sec) * 1000 + (end.tv_usec - p->start_time.tv_usec) / 1000;
+
 	printf("\n--- %s ping statistics ---\n", p->dest_name);
-	printf("%d packets transmitted, %d packets received, %.0f%% packet loss\n",
+	printf("%d packets transmitted, %d packets received, %.0f%% packet loss, time %ldms\n",
 	       p->packets_sent, p->packets_received,
-	       (p->packets_sent > 0) ? ((p->packets_sent - p->packets_received) / (double)p->packets_sent) * 100 : 0);
+	       (p->packets_sent > 0) ? ((p->packets_sent - p->packets_received) / (double)p->packets_sent) * 100 : 0,
+	       total_time);
+	
 	if (p->packets_received > 0)
 	{
 		avg = p->sum_rtt / p->packets_received;
 		var = (p->sum_sq_rtt / p->packets_received) - (avg * avg);
-		mdev = ft_sqrt(var);
-		printf("rtt min/avg/max/mdev = %.3f/%.3f/%.3f/%.3f ms\n", p->min_rtt, avg, p->max_rtt, mdev);
+		stddev = ft_sqrt(var);
+		printf("round-trip min/avg/max/stddev = %.3f/%.3f/%.3f/%.3f ms\n",
+		       p->min_rtt, avg, p->max_rtt, stddev);
 	}
 }
 
@@ -65,7 +75,8 @@ static void receive_one_ping(t_ping *p)
 		if (p->packets_received == 1 || rtt < p->min_rtt) p->min_rtt = rtt;
 		if (p->packets_received == 1 || rtt > p->max_rtt) p->max_rtt = rtt;
 		p->sum_rtt += rtt; p->sum_sq_rtt += rtt * rtt;
-		printf("64 bytes from %s: icmp_seq=%d ttl=%d time=%.2f ms\n", p->dest_ip, ic.un.echo.sequence, ip->ttl, rtt);
+		printf("64 bytes from %s: icmp_seq=%d ttl=%d time=%.3f ms\n",
+		       p->dest_ip, ic.un.echo.sequence, ip->ttl, rtt);
 	}
 	else if (p->verbose)
 	{
@@ -82,12 +93,14 @@ void start_ping_loop(t_ping *p)
 	fd_set r;
 	char buf[PACKET_SIZE];
 
+	gettimeofday(&p->start_time, NULL);
 	signal(SIGINT, handle_sigint);
 	while (keep_running)
 	{
 		gettimeofday(&ls, NULL);
 		build_icmp_packet(buf, p->seq++, p->id);
-		if (sendto(p->sock, buf, PACKET_SIZE, 0, (struct sockaddr *)&p->dest_addr, sizeof(p->dest_addr)) > 0) p->packets_sent++;
+		if (sendto(p->sock, buf, PACKET_SIZE, 0, (struct sockaddr *)&p->dest_addr, sizeof(p->dest_addr)) > 0)
+			p->packets_sent++;
 		long el = 0;
 		while (keep_running && el < 1000000)
 		{
