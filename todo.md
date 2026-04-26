@@ -10,11 +10,11 @@
   - [x] Implement eudian network translation from CPU to Network (check hton)
   - [x] Implement IP header edition using sockops for the time to live
 - [ ] Add the ability to send packat mimiking ping function
-  - [ ] Parse Args
-  - [ ] Implement verbose print
+  - [x] Parse Args
+  - [ ] Implement verbose display
   - [ ] Options display (-help commmand)
   - [x] Function to populate the packet with the good value
-  - [ ] Implement sending loop with send and receive of packet
+  - [x] Implement sending loop with send and receive of packet
   - [ ] Implement the Roud Trip time calculation
-  - [ ] Implement killing signals
+  - [x] Implement killing signals
   - [ ] Implement finale statistique display

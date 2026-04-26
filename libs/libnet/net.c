@@ -24,10 +24,7 @@ int resolve_hostname(const char *hostname, char *ip_str)
 	hints.ai_socktype = SOCK_RAW;
 
 	if ((status = getaddrinfo(hostname, NULL, &hints, &res)) != 0)
-	{
-		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(status));
 		return -1;
-	}
 
 	ipv4 = (struct sockaddr_in *)res->ai_addr;
 	if (inet_ntop(res->ai_family, &(ipv4->sin_addr), ip_str, INET_ADDRSTRLEN) == NULL)

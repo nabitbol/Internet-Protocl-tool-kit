@@ -18,7 +18,8 @@ CFLAGS = -Wall -Wextra -Werror -I$(DIR_LIBICMP)/inc -I$(DIR_LIBNET)/Inc -I$(DIR_
 # Sources
 SRC = $(DIR_PING)/scrs/main.c \
       $(DIR_PING)/scrs/parsing.c \
-      $(DIR_PING)/scrs/packet.c
+      $(DIR_PING)/scrs/packet.c \
+      $(DIR_PING)/scrs/engine.c
 OBJ = $(SRC:.c=.o)
 
 # Rules
