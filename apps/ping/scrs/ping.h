@@ -5,6 +5,10 @@
 #include <arpa/inet.h>
 #include <netinet/ip_icmp.h>
 #include <signal.h>
+#include <sys/time.h>
+
+#define PAYLOAD_SIZE 56
+#define PACKET_SIZE (sizeof(struct icmphdr) + PAYLOAD_SIZE)
 
 typedef struct s_ping
 {
@@ -17,11 +21,17 @@ typedef struct s_ping
 	char dest_ip[INET_ADDRSTRLEN];
 	struct sockaddr_in dest_addr;
 	int sock;
+	
+	// Stats RTT
+	double min_rtt;
+	double max_rtt;
+	double sum_rtt;
+	double sum_sq_rtt;
 } t_ping;
 
 void print_usage(char *name);
 int parse_args(int argc, char **argv, t_ping *ping);
-void build_icmp_packet(struct icmphdr *icmp, int seq, int id);
+void build_icmp_packet(void *buf, int seq, int id);
 void start_ping_loop(t_ping *ping);
 
 #endif
