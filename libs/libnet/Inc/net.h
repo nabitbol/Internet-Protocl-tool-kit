@@ -9,9 +9,11 @@
 #include <netdb.h>
 #include <sys/socket.h>
 #include <sys/types.h>
+#include <netinet/in.h>
 
 int create_raw_socket(int protocol);
 int resolve_hostname(const char *hostname, char *ip_str);
 int set_socket_ttl(int sock, int ttl);
+void init_address(struct sockaddr_in *addr, const char *ip_str);
 
 #endif

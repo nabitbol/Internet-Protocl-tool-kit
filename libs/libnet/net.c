@@ -50,3 +50,10 @@ int set_socket_ttl(int sock, int ttl)
 	}
 	return 0;
 }
+
+void init_address(struct sockaddr_in *addr, const char *ip_str)
+{
+	memset(addr, 0, sizeof(struct sockaddr_in));
+	addr->sin_family = AF_INET;
+	inet_pton(AF_INET, ip_str, &addr->sin_addr);
+}

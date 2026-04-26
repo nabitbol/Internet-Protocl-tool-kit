@@ -1,0 +1,20 @@
+- [x] Add the ability to create an ICMP packet
+  - [x] Build a transcoder
+    - [x] Encode ICMP datagram
+    - [x] Decode ICMP datagram
+    - [x] Implement checksum
+  - [x] ICMP response/error mapping
+- [x] Add the ability to send over the network a valid ping packet
+  - [x] Implement the socket raw connection to read bytes directly
+  - [x] Implement DNS resolution
+  - [x] Implement eudian network translation from CPU to Network (check hton)
+  - [x] Implement IP header edition using sockops for the time to live
+- [ ] Add the ability to send packat mimiking ping function
+  - [ ] Parse Args
+  - [ ] Implement verbose print
+  - [ ] Options display (-help commmand)
+  - [x] Function to populate the packet with the good value
+  - [ ] Implement sending loop with send and receive of packet
+  - [ ] Implement the Roud Trip time calculation
+  - [ ] Implement killing signals
+  - [ ] Implement finale statistique display
